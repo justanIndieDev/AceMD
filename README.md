@@ -16,40 +16,72 @@ ACEMD turns the pedals on a Logitech G29 racing wheel into customizable keyboard
 
 ## Requirements
 
-- Windows
-- Python 3.13 (the included launcher uses `py -3.13`)
+- Windows 10 or Windows 11
+- Python 3.13
 - A compatible controller; the current defaults are configured for a Logitech G29
-- The Python packages listed below
+- Internet access for the initial dependency installation
 
-Install the dependencies from a terminal:
+## Setup guide
+
+### 1. Install Python
+
+Install Python 3.13 from [python.org](https://www.python.org/downloads/). Make sure the Python Launcher (`py`) is installed. After installation, open Command Prompt and check:
+
+```bat
+py -3.13 --version
+```
+
+You should see Python 3.13.x. If Windows says the command was not found, rerun the Python installer and enable the Python Launcher, or reinstall Python 3.13.
+
+### 2. Download ACEMD
+
+Go to the [ACEMD repository](https://github.com/justanIndieDev/AceMD) and click **Code → Download ZIP**, then extract the ZIP to a folder you can find again, such as:
+
+```text
+%USERPROFILE%\Desktop\ACEMD
+```
+
+Alternatively, use the [latest release](https://github.com/justanIndieDev/AceMD/releases) when one is available.
+
+### 3. Install the dependencies
+
+In the extracted ACEMD folder, double-click **install_dependencies.bat** and wait for it to finish. It installs or updates the Python packages ACEMD needs. Keep the window open until it reports success.
+
+If you prefer using a terminal, open PowerShell in the project folder and run:
 
 ```powershell
+py -3.13 -m pip install --upgrade pip
 py -3.13 -m pip install pygame pyautogui pynput pystray pillow
 ```
 
-## Run
+### 4. Connect your controller
 
-1. Connect your G29 and make sure Windows recognizes it.
-2. Put `main.py` and `start_acemd.bat` in the same folder.
-3. Double-click `start_acemd.bat`.
+Connect your Logitech G29 and confirm Windows detects it. Close other controller utilities if they appear to interfere with input. ACEMD currently uses the first controller detected by Pygame.
 
-The included batch file currently expects `main.py` at `%USERPROFILE%\Desktop\ACEMD\main.py`. If your project lives somewhere else, edit that path in the batch file.
+### 5. Launch ACEMD
 
-You can also launch it directly:
+Double-click **start_acemd.bat**. The included launcher expects the script at:
+
+```text
+%USERPROFILE%\Desktop\ACEMD\main.py
+```
+
+If you extracted the repository somewhere else, open `start_acemd.bat` in Notepad and change that path to your actual `main.py` location. You can also open a terminal in the project folder and run:
 
 ```powershell
 py -3.13 main.py
 ```
 
-## First use
+### 6. Calibrate and test
 
-1. Start ACEMD.
-2. Click **CALIBRATE**, release all pedals, and follow the prompts for each pedal.
-3. Check the displayed axis numbers and key bindings.
-4. Click **START** to enable pedal input.
-5. Click **STOP** before changing calibration or troubleshooting.
+1. Click **CALIBRATE**.
+2. Release all pedals and keep the wheel still, then follow the prompts. Press and hold only the pedal requested by each prompt.
+3. Check the live axis readings and make sure each pedal is detected correctly.
+4. Review the pedal key bindings and two-pedal combo keys.
+5. Click **START** to enable input. Click **STOP** to disable it.
+6. To fully exit, right-click the ACEMD tray icon and choose **Quit ACEMD**. Closing the window hides it to the tray.
 
-The default bindings and axis numbers are starting points, not guaranteed settings for every wheel or driver. Calibrate your own controller before relying on them.
+Test the controls in a text editor or another safe, non-critical app before using them in a game.
 
 ## Controls and behavior
 
@@ -58,20 +90,21 @@ The default bindings and axis numbers are starting points, not guaranteed settin
 - Pressing all three pedals suppresses keyboard output.
 - Double-tapping a pedal within the configured time window launches its assigned application.
 - Closing the window hides ACEMD to the system tray. Use **Quit ACEMD** from the tray menu to fully exit.
-
-YouTube Music shortcuts can depend on browser focus and the current player layout. Media keys may control whichever app Windows currently routes media commands to.
+- YouTube Music controls may depend on browser focus and the current player layout. Media keys may control whichever app Windows currently routes media commands to.
 
 ## Troubleshooting
 
+- **Python 3.13 not found:** install Python 3.13 and verify `py -3.13 --version`.
+- **Dependency installation fails:** check your internet connection, then run `install_dependencies.bat` again. If needed, open Command Prompt and run the terminal commands above to see the full error.
 - **Controller not detected:** reconnect the wheel, check Windows controller settings, then restart ACEMD.
 - **Pedals activate incorrectly:** use **CALIBRATE** and check the live raw-axis readings.
 - **Keys remain held or inputs seem stuck:** click **STOP** or fully quit ACEMD.
 - **App launcher does nothing:** use **Browse** to select a valid `.exe` file.
-- **Python or package error:** confirm Python 3.13 is installed and install the dependencies above.
+- **YouTube Music shortcuts do not work:** make sure the player is open and check its current keyboard shortcuts.
 
 ## Project status
 
-ACEMD is an experimental personal project. Compatibility and behavior may vary with controller drivers, games, browser versions, and Windows settings. Test bindings in a safe, non-critical environment before using them in a game.
+ACEMD is an experimental personal project. Compatibility and behavior may vary with controller drivers, games, browser versions, and Windows settings. The setup scripts install Python dependencies; they do not install Python itself or guarantee compatibility with every controller.
 
 ## Safety and fair play
 
