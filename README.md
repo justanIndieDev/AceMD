@@ -1,4 +1,4 @@
-# ACEMD — AceMacroDeck
+# ACEMD - AceMacroDeck
 
 > **Keyboards are mainstream. Become The Foot Guy.**
 
