@@ -1,12 +1,10 @@
 import os
 import time
 import threading
-import webbrowser
 import pygame
 import pyautogui
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
-from urllib.parse import urlparse
 from pynput.keyboard import Controller, Key
 import pystray
 from PIL import Image, ImageDraw
@@ -58,8 +56,6 @@ controller_var = tk.StringVar(value="Controller not connected")
 combo_var = tk.StringVar(value="No active combo")
 raw_var = tk.StringVar(value="Raw axes: —")
 delay_var = tk.StringVar(value=str(DOUBLE_TAP_MS))
-playlist_url_var = tk.StringVar(value="https://music.youtube.com/")
-music_status_var = tk.StringVar(value="Ready — open YouTube Music in Brave")
 
 style = ttk.Style()
 try:
@@ -223,177 +219,6 @@ for pair, config in COMBOS.items():
     key_var = tk.StringVar(value=config["key"])
     combo_key_vars[pair] = key_var
     ttk.Entry(row, textvariable=key_var, width=12).pack(side="left")
-
-ttk.Separator(content).pack(fill="x", pady=12)
-
-ttk.Label(content, text="YouTube Music", style="Section.TLabel").pack(
-    anchor="w", pady=(0, 8)
-)
-
-ttk.Label(
-    content,
-    text="Playback and volume use Windows media keys. Next, Previous, "
-         "and Shuffle attempt to use YouTube Music keyboard shortcuts.",
-    wraplength=680,
-).pack(anchor="w", pady=(0, 8))
-
-playlist_row = ttk.Frame(content, padding=(0, 4))
-playlist_row.pack(fill="x")
-
-ttk.Label(playlist_row, text="Playlist URL").pack(side="left", padx=(0, 8))
-
-ttk.Entry(
-    playlist_row,
-    textvariable=playlist_url_var,
-).pack(side="left", fill="x", expand=True)
-
-
-def open_playlist():
-    url = playlist_url_var.get().strip()
-    parsed = urlparse(url)
-
-    if parsed.scheme != "https" or parsed.hostname not in {
-        "music.youtube.com",
-        "www.youtube.com",
-        "youtube.com",
-    }:
-        messagebox.showerror(
-            "Invalid playlist URL",
-            "Enter a YouTube Music or YouTube HTTPS URL.",
-        )
-        return
-
-    try:
-        webbrowser.open(url)
-        music_status_var.set("Opened playlist URL in your default browser.")
-    except Exception as error:
-        music_status_var.set(f"Could not open playlist: {error}")
-
-
-def media_key(key_name, description):
-    try:
-        pyautogui.press(key_name)
-        music_status_var.set(f"Sent {description} media command.")
-    except Exception as error:
-        music_status_var.set(f"{description} failed: {error}")
-
-
-def music_play_pause():
-    media_key("playpause", "Play/pause")
-
-
-def music_volume_up():
-    media_key("volumeup", "Volume up")
-
-
-def music_volume_down():
-    media_key("volumedown", "Volume down")
-
-
-def music_mute():
-    media_key("volumemute", "Mute")
-
-
-def focus_youtube_music():
-    windows = pyautogui.getWindowsWithTitle("YouTube Music")
-
-    if not windows:
-        music_status_var.set(
-            "YouTube Music window not found. Open the player in Brave."
-        )
-        return False
-
-    try:
-        windows[0].activate()
-        time.sleep(0.3)
-        return True
-    except Exception as error:
-        music_status_var.set(f"Could not focus YouTube Music: {error}")
-        return False
-
-
-def music_next():
-    try:
-        if not focus_youtube_music():
-            return
-
-        pyautogui.hotkey("shift", "n")
-        music_status_var.set("Sent Next Track shortcut. Check the player.")
-    except Exception as error:
-        music_status_var.set(f"Next track failed: {error}")
-
-
-def music_previous():
-    try:
-        if not focus_youtube_music():
-            return
-
-        pyautogui.hotkey("shift", "p")
-        music_status_var.set("Sent Previous Track shortcut. Check the player.")
-    except Exception as error:
-        music_status_var.set(f"Previous track failed: {error}")
-
-
-def music_shuffle():
-    try:
-        if not focus_youtube_music():
-            return
-
-        pyautogui.press("s")
-        music_status_var.set(
-            "Sent Shuffle shortcut. Check whether Shuffle changed."
-        )
-    except Exception as error:
-        music_status_var.set(f"Shuffle failed: {error}")
-
-
-ttk.Button(
-    playlist_row,
-    text="Open",
-    command=open_playlist,
-).pack(side="left", padx=(8, 0))
-
-music_buttons = ttk.Frame(content, padding=(0, 8))
-music_buttons.pack(fill="x")
-
-music_button_specs = [
-    ("Play / Pause", music_play_pause),
-    ("Previous", music_previous),
-    ("Next", music_next),
-    ("Volume −", music_volume_down),
-    ("Volume +", music_volume_up),
-    ("Mute", music_mute),
-    ("Shuffle", music_shuffle),
-]
-
-for index, (label, command) in enumerate(music_button_specs):
-    ttk.Button(
-        music_buttons,
-        text=label,
-        command=command,
-    ).grid(
-        row=index // 4,
-        column=index % 4,
-        sticky="ew",
-        padx=3,
-        pady=3,
-    )
-
-for column in range(4):
-    music_buttons.columnconfigure(column, weight=1)
-
-ttk.Label(
-    content,
-    textvariable=music_status_var,
-    wraplength=680,
-).pack(anchor="w", pady=(0, 4))
-
-ttk.Label(
-    content,
-    text="Next and Previous require the YouTube Music page to accept "
-         "keyboard shortcuts. Shuffle may depend on the current player layout.",
-    wraplength=680,
-).pack(anchor="w", pady=(0, 4))
 
 ttk.Separator(content).pack(fill="x", pady=12)
 
