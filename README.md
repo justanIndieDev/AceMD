@@ -2,7 +2,7 @@
 
 > **Keyboards are mainstream. Become The Foot Guy.**
 
-ACEMD turns the pedals on a Logitech G29 racing wheel into customizable keyboard controls. Use your feet to play games, trigger shortcuts, launch apps, or control music.
+ACEMD turns the pedals on a Logitech G29 racing wheel into customizable keyboard controls. Use your feet to play games, trigger shortcuts, and launch apps.
 
 ## Features
 
@@ -10,7 +10,6 @@ ACEMD turns the pedals on a Logitech G29 racing wheel into customizable keyboard
 - **Calibration** — detect pedal axes and movement direction.
 - **Two-pedal combos** — assign a key to combinations of two pedals.
 - **Double-tap app launcher** — double-tap a pedal to launch its configured application.
-- **YouTube Music controls** — play/pause, skip tracks, adjust volume, mute, and attempt shuffle.
 - **System tray** — hide ACEMD in the tray and start, stop, restore, or quit it from the tray menu.
 - **Live feedback** — view raw controller axes and the current pedal/combo state.
 
@@ -90,7 +89,6 @@ Test the controls in a text editor or another safe, non-critical app before usin
 - Pressing all three pedals suppresses keyboard output.
 - Double-tapping a pedal within the configured time window launches its assigned application.
 - Closing the window hides ACEMD to the system tray. Use **Quit ACEMD** from the tray menu to fully exit.
-- YouTube Music controls may depend on browser focus and the current player layout. Media keys may control whichever app Windows currently routes media commands to.
 
 ## Troubleshooting
 
@@ -100,7 +98,6 @@ Test the controls in a text editor or another safe, non-critical app before usin
 - **Pedals activate incorrectly:** use **CALIBRATE** and check the live raw-axis readings.
 - **Keys remain held or inputs seem stuck:** click **STOP** or fully quit ACEMD.
 - **App launcher does nothing:** use **Browse** to select a valid `.exe` file.
-- **YouTube Music shortcuts do not work:** make sure the player is open and check its current keyboard shortcuts.
 
 ## Project status
 
