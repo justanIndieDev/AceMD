@@ -1,6 +1,6 @@
 # ACEMD - AceMacroDeck
 
-> **Keyboards are mainstream. Become The Foot Guy.**
+> **Keyboards are too mainstream. Become The Foot Guy.**
 
 ACEMD turns the pedals on a Logitech G29 racing wheel into customizable keyboard controls. Use your feet to play games, trigger shortcuts, and launch apps.
 
